@@ -1,0 +1,11 @@
+[workspace]
+members = [
+    "database",
+    "log_in",
+    "user",
+    "manager"
+]
+
+
+resolver = "2"
+
