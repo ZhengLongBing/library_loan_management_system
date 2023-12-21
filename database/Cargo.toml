@@ -9,6 +9,6 @@ edition = "2021"
 diesel = { version = "2.1.4", features = ["mysql", "time", "chrono"] }
 dotenvy = "0.15.7"
 chrono="0.4.31"
-
+thiserror="1.0.51"
 
 

@@ -1,14 +1,10 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+mod schema;
+mod error;
+pub mod models;
+pub mod connect;
+pub mod book;
+pub mod account;
+mod borrow_records;
+mod borrow_and_return_records;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
