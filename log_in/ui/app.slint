@@ -1,11 +1,179 @@
-component App inherits Window{
+import { SCard } from "../../SurrealismUI/src/card/index.slint";
+import { SText } from "../../SurrealismUI/src/text/index.slint";
+import { SInput } from "../../SurrealismUI/src/input/index.slint";
+import { SButton } from "../../SurrealismUI/src/button/index.slint";
+import { SDivider , SPopup, SIcon} from "../../SurrealismUI/index.slint";
+import { SAlert } from "../../SurrealismUI/src/alert/index.slint";
+export component App inherits Window {
+    private property <string> state:"登录";
+    callback log-in(string,string)->string;
+    callback register(string,string,string,string)->string;
     height: 400px;
-    width: 400px;
-    title: "Hello World";
-    background: #f0f0f0;
-    Rectangle {
-        Text {
-            text: "Hello World";
+    width: 350px;
+    background: white;
+    SCard {
+        border-type: None;
+        theme: Dark;
+        height: 100%;
+        width: 100%;
+        if state=="登录" :Rectangle{
+            height: 100%;
+            width: 100%;
+            HorizontalLayout {
+                alignment: center;
+                log_in_alert:=SAlert {
+                    width: 80%;
+                }
+            }
+            HorizontalLayout {
+                alignment: center;
+                VerticalLayout {
+                    alignment: center;
+                    spacing: self.height * 0.04;
+                    SText {
+                        text: "图书借阅管理系统";
+                        theme: Dark;
+                        width: 65%;
+                        color: #bdc3c7;
+                        font-size: 25px;
+                        horizontal-alignment: center;
+                    }
+                    HorizontalLayout {
+                        alignment: center;
+                        VerticalLayout {
+                            padding-bottom: root.height*0.075;
+                            SDivider {
+                                width: 60%;
+                                theme: Info;
+                                height: 1px;  
+                            }
+                        }
+                    }
+                    log-in-username:=SInput {
+                        theme: Dark;
+                        height: 7.5%;
+                        width: 65%;
+                        placeholder: "用户名";
+                    }
+                    log-in-password:=SInput {
+                        theme: Dark;
+                        height: 7.5%;
+                        width: 65%;
+                        placeholder: "密码";
+                        password: true;
+                    }
+                    HorizontalLayout {
+                        height: root.height * 0.075;
+                        width: 65%;
+                        alignment: space-around;
+                        padding-top: root.height *0.025;
+                        SButton {  
+                            private property <string> callback-str:"登录成功";                      
+                            border-type: Normal;
+                            text:"登录";
+                            font-color: white;
+                            height: parent.height;
+                            theme: Primary;
+                            width: 30%;
+                            clicked => {
+                                callback-str=log-in(log-in-username.text,log-in-password.text);                               
+                                log-in-alert.error(callback-str)
+                            }
+                        }
+                        SButton {
+                            border-type: Normal;
+                            text:"注册";
+                            font-color: white;
+                            height: parent.height;
+                            theme: Warning;
+                            width: 30%;
+                            clicked => {
+                                state="注册"
+                            }
+                        }
+                    }
+                }
+            }
         }
+        if state=="注册" :Rectangle {
+            height: 100%;
+            width: 100%;
+            SIcon {
+                source: @image-url(".\\icons\\return.svg");
+                z:100000;
+                x:10px;
+                y:10px;
+                theme: Dark;
+                height: 30px;
+                width: 30px;
+                clicked => {
+                    state="登录"
+                }
+            }
+            HorizontalLayout {
+                alignment: center;
+                register_alert:=SAlert {
+                    width: 80%;
+                }
+            }
+            HorizontalLayout {
+                alignment: center;
+                VerticalLayout {
+                    alignment: center;
+                    spacing: self.height * 0.04;
+                    register-username:=SInput {
+                        theme: Dark;
+                        height: 7.5%;
+                        width: 65%;
+                        placeholder: "用户名";
+                    }
+                    register-email:=SInput {
+                        theme: Dark;
+                        height: 7.5%;
+                        width: 65%;
+                        placeholder: "邮箱";
+                    }
+                    register-password:=SInput {
+                        theme: Dark;
+                        height: 7.5%;
+                        width: 65%;
+                        placeholder: "密码";
+                        password: true;
+                    }
+                    register-confirm-password:=SInput {
+                        theme: Dark;
+                        height: 7.5%;
+                        width: 65%;
+                        placeholder: "确认密码";
+                        password: true;
+                    }
+                    HorizontalLayout {
+                        height: root.height * 0.075;
+                        width: 65%;
+                        alignment: space-around;
+                        padding-top: root.height *0.025;
+                        SButton { 
+                            private property <string> callback-str:"注册成功";                       
+                            border-type: Normal;
+                            text:"注册";
+                            font-color: white;
+                            height: parent.height;
+                            theme: Primary;
+                            width: 100%;
+                            clicked => {
+                                callback-str=register(register-username.text,
+                                    register-email.text,register-password.text,
+                                    register-confirm-password.text);
+                                if(callback-str=="注册成功"){
+                                    register-alert.success(callback-str)
+                                }else{
+                                    register-alert.error(callback-str)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }    
     }
-}   
+}
