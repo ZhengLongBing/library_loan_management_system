@@ -1,0 +1,100 @@
+import { SMenu,SInput,SCard,SIcon,SAvatar,SSelect,SText,SSwitch,SButton } from "../../SurrealismUI/index.slint";
+component App inherits Window{
+    title: "图书借阅管理系统";
+    icon: @image-url("../../ui/icons/bookshelf.png");
+    height: 600px;
+    width: 1000px;
+    HorizontalLayout {
+        alignment: stretch;
+        menu:=SMenu {
+            theme: Dark; 
+            menu-data: [
+                {id:0,icon:@image-url(".\\icons\\search.svg"),name:"书籍搜索"},
+                {id:1,icon:@image-url(".\\icons\\info.svg"),name:"借阅记录"},
+                {id:2,icon:@image-url(".\\icons\\history.svg"),name:"借还记录"}
+            ];
+            clicked-account=>{
+                self.active=3;
+            }
+            clicked-setting=>{
+                self.active=4;
+            }    
+        }
+        HorizontalLayout {
+            alignment: center;
+            VerticalLayout {
+                padding-top: self.height * 0.01;
+                padding-bottom: self.height * 0.05;
+                alignment: space-between;
+                
+                Rectangle {
+                    height: 35px;
+                    width: 100%;
+                    input:=SInput {  
+                        x:(parent.width - self.width)/2;
+                        height: 35px;
+                        width: 35%;
+                        theme: Light;
+                        border-type: Normal;
+                    }
+                    SSelect {
+                        x:(parent.width + input.width)/2+5px;
+                        height: 35px;
+                        width: 10%;
+                        border-type: Normal;
+                        theme: Light;
+                    }   
+                }
+                HorizontalLayout {
+                    alignment: center;
+                    width: 100%;
+                    height: 75%;
+                    z:3;
+                    VerticalLayout {                        
+                        height: 100%;
+                        alignment: center;
+                        Rectangle {
+                            background: black;
+                            width: 75%;
+                            height: 20px;
+                        }
+                    }
+                }
+                HorizontalLayout {
+                    alignment: center;
+                    spacing: 5px;
+                    SButton { 
+                        text: "首页";
+                        height: 35px;
+                        theme: Primary;
+                     }
+                     SButton { 
+                        text: "上一页";
+                        height: 35px;
+                        theme: Primary;
+                     }
+                     SCard {
+                        height: 35px;
+                        width: 60px;
+                        theme: Primary;
+                        SText{
+                            text: "1";
+                            height: 35px;
+                            theme: Primary;
+                         }
+                     }
+                     SButton { 
+                        text: "下一页";
+                        height: 35px;
+                        theme: Primary;
+                     }
+                     SButton { 
+                        text: "尾页";
+                        height: 35px;
+                        theme: Primary;
+                    }
+                }
+            }  
+        }
+    }
+}   
